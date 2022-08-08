@@ -14,11 +14,12 @@ import wx.xrc
 ###########################################################################
 ## Class GameMain
 ###########################################################################
+from wx import TextCtrl
+
 
 class GameMain(wx.Dialog):
-
     def __init__(self, parent):
-        wx.Dialog.__init__(self, parent, id=wx.ID_ANY, title=u"Hangman", pos=wx.DefaultPosition, size=wx.Size(300, 280),
+        wx.Dialog.__init__(self, parent, id=wx.ID_ANY, title=u"Hangman", pos=wx.DefaultPosition, size=wx.Size(370, 280),
                            style=wx.DEFAULT_DIALOG_STYLE)
 
         self.SetSizeHints(wx.DefaultSize, wx.DefaultSize)
@@ -37,6 +38,9 @@ class GameMain(wx.Dialog):
 
         self.lifes = wx.TextCtrl(sbSizer1.GetStaticBox(), wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize,
                                  wx.TE_READONLY)
+        self.lifes.SetFont(
+            wx.Font(wx.NORMAL_FONT.GetPointSize(), wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL,
+                    False, wx.EmptyString))
         self.lifes.SetForegroundColour(wx.SystemSettings.GetColour(wx.SYS_COLOUR_WINDOWTEXT))
         self.lifes.SetBackgroundColour(wx.SystemSettings.GetColour(wx.SYS_COLOUR_3DLIGHT))
 
@@ -56,11 +60,11 @@ class GameMain(wx.Dialog):
 
         bSizer81 = wx.BoxSizer(wx.VERTICAL)
 
-        self.usersInput = wx.TextCtrl(self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0)
+        self.usersInput = wx.TextCtrl(self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, wx.TE_PROCESS_ENTER)
         bSizer81.Add(self.usersInput, 0, wx.ALL | wx.EXPAND, 5)
 
-        self.comfirm = wx.Button(self, wx.ID_ANY, u"确认", wx.DefaultPosition, wx.DefaultSize, 0)
-        bSizer81.Add(self.comfirm, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 5)
+        self.retry = wx.Button(self, wx.ID_ANY, u"重开", wx.DefaultPosition, wx.DefaultSize, 0)
+        bSizer81.Add(self.retry, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 5)
 
         bSizer2.Add(bSizer81, 1, wx.EXPAND, 5)
 
@@ -70,11 +74,15 @@ class GameMain(wx.Dialog):
         self.Centre(wx.BOTH)
 
         # Connect Events
-        self.comfirm.Bind(wx.EVT_BUTTON, self.confirmInput)
+        self.Bind(wx.EVT_TEXT_ENTER, self.confirmInput, self.usersInput)
+        self.retry.Bind(wx.EVT_BUTTON, self.Again)
 
     def __del__(self):
         pass
 
     # Virtual event handlers, override them in your derived class
     def confirmInput(self, event):
+        event.Skip()
+
+    def Again(self, event):
         event.Skip()
