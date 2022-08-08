@@ -15,7 +15,12 @@ class StartsGame(GameMenu.Menu):
         app2.MainLoop()
 
 
-app1 = wx.App(False)
-frame1 = StartsGame(None)
-frame1.Show(True)
+class App1(wx.App):
+    def OnInit(self):
+        self.frame1 = StartsGame(None)
+        self.frame1.Show(True)
+        return True
+
+
+app1 = App1()
 app1.MainLoop()

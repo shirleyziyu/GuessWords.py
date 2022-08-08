@@ -1,16 +1,22 @@
 # -*- coding: UTF-8 -*-
 
-#import wx
+import wx
+# import GameEnd
 import GameWindow
-import GameEnd
+import random
+
+fo = open('sentencelib.txt')
+library = fo.readlines()
+randomAnswer = random.choice(library)
+fo.close()
 
 
 class gameFrame(GameWindow.GameMain):
     def __init__(self, parent):
         GameWindow.GameMain.__init__(self, parent)
         self.inputText = None
-        self.sentence = "welcome to wonderland"
-        self.answer = "welcome to wonderland"
+        self.sentence = randomAnswer[0:-1]
+        self.answer = randomAnswer[0:-1]
         self.right_answer = list(self.answer)
         self.clue = list("*" * len(self.answer))
         self.chances = 10
@@ -20,7 +26,7 @@ class gameFrame(GameWindow.GameMain):
         self.outputHint.SetValue(self.resultHint)
 
     def confirmInput(self, event):
-        '''点击确认后发生的事件'''
+        '''回车后发生的事件'''
         self.inputText = self.usersInput.GetValue()
         self.__gameJudge()
         self.lifes.SetValue(str(self.chances))
@@ -39,8 +45,11 @@ class gameFrame(GameWindow.GameMain):
         '''游戏判断：正确和错误，失败和胜利'''
         if self.chances > 1:
             if self.inputText == self.answer:
-                GameEnd.gameEnd.openFrame(self)
-                GameEnd.gameEnd.gameResult.SetValue("正确答案！游戏胜利！")
+                '''game_e = GameEnd.gameEnd(None)
+                game_e.openFrame("正确答案！游戏胜利！")
+                game_e.gameResult.SetValue("正确答案！游戏胜利！")
+                game_e.Show(True)'''
+                self.resultHint = "正确答案！游戏胜利！"
             elif len(self.inputText) == 1:
                 if self.inputText in self.answer:
                     self.resultHint = self.__changeHint(self.inputText)
@@ -49,14 +58,15 @@ class gameFrame(GameWindow.GameMain):
             else:
                 self.chances -= 1
         else:
-            GameEnd.gameEnd.openFrame(self)
-            GameEnd.gameEnd.gameResult.SetValue("机会耗尽，游戏失败。")
+            '''game_e = GameEnd.gameEnd(None)
+            game_e.openFrame("机会耗尽，游戏失败。")
+            game_e.gameResult.SetValue("机会耗尽，游戏失败。")
+            game_e.Show(True)'''
+            self.resultHint = "机会耗尽，游戏失败。"
 
-'''app = wx.App(False)
 
-frame = gameFrame(None)
-
-frame.Show(True)
-
-# start the applications
-app.MainLoop()'''
+if __name__ == "__main__":
+    app = wx.App(False)
+    frame = gameFrame(None)
+    frame.Show(True)
+    app.MainLoop()
