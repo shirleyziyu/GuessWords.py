@@ -9,9 +9,13 @@ class StartsGame(GameMenu.Menu):
         GameMenu.Menu.__init__(self, parent)
 
     def gameStart(self, event):
-        app2 = wx.App(False)
-        frame2 = HangmanMain.gameFrame(None)
-        frame2.Show(True)
+        class App2(wx.App):
+            def __init__(self, redirect=False, filename=None, useBestVisual=False, clearSigInt=True):
+                super().__init__(redirect, filename, useBestVisual, clearSigInt)
+                self.frame2 = HangmanMain.gameFrame(None)
+                self.frame2.Show()
+
+        app2 = App2()
         app2.MainLoop()
 
 

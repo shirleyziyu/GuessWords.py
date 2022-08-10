@@ -50,6 +50,7 @@ class gameFrame(GameWindow.GameMain):
                 game_e.gameResult.SetValue("正确答案！游戏胜利！")
                 game_e.Show(True)'''
                 self.resultHint = "正确答案！游戏胜利！"
+                self.Destroy()
             elif len(self.inputText) == 1:
                 if self.inputText in self.answer:
                     self.resultHint = self.__changeHint(self.inputText)
@@ -63,6 +64,8 @@ class gameFrame(GameWindow.GameMain):
             game_e.gameResult.SetValue("机会耗尽，游戏失败。")
             game_e.Show(True)'''
             self.resultHint = "机会耗尽，游戏失败。"
+            self.Destroy()
+            wx.Exit()
 
 
 if __name__ == "__main__":

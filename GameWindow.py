@@ -14,16 +14,16 @@ import wx.xrc
 ###########################################################################
 ## Class GameMain
 ###########################################################################
-from wx import TextCtrl
 
+class GameMain(wx.Frame):
 
-class GameMain(wx.Dialog):
     def __init__(self, parent):
-        wx.Dialog.__init__(self, parent, id=wx.ID_ANY, title=u"Hangman", pos=wx.DefaultPosition, size=wx.Size(370, 280),
-                           style=wx.DEFAULT_DIALOG_STYLE)
+        wx.Frame.__init__(self, parent, id=wx.ID_ANY, title=u"Hangman", pos=wx.DefaultPosition, size=wx.Size(480, 300),
+                          style=wx.DEFAULT_FRAME_STYLE | wx.TAB_TRAVERSAL)
 
         self.SetSizeHints(wx.DefaultSize, wx.DefaultSize)
-        self.SetBackgroundColour(wx.SystemSettings.GetColour(wx.SYS_COLOUR_HIGHLIGHTTEXT))
+        self.SetForegroundColour(wx.SystemSettings.GetColour(wx.SYS_COLOUR_BTNTEXT))
+        self.SetBackgroundColour(wx.SystemSettings.GetColour(wx.SYS_COLOUR_WINDOW))
 
         bSizer2 = wx.BoxSizer(wx.VERTICAL)
 
@@ -31,6 +31,8 @@ class GameMain(wx.Dialog):
 
         self.hint = wx.StaticText(self, wx.ID_ANY, u"\n请输入单个字母或答案", wx.DefaultPosition, wx.DefaultSize, 0)
         self.hint.Wrap(-1)
+
+        self.hint.SetForegroundColour(wx.SystemSettings.GetColour(wx.SYS_COLOUR_BTNTEXT))
 
         bSizer6.Add(self.hint, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 5)
 
@@ -74,7 +76,7 @@ class GameMain(wx.Dialog):
         self.Centre(wx.BOTH)
 
         # Connect Events
-        self.Bind(wx.EVT_TEXT_ENTER, self.confirmInput, self.usersInput)
+        self.usersInput.Bind(wx.EVT_TEXT_ENTER, self.confirmInput)
         self.retry.Bind(wx.EVT_BUTTON, self.Again)
 
     def __del__(self):
