@@ -67,13 +67,6 @@ class gameFrame(GameWindow.GameMain):
             self.Destroy()
 
 
-class App2(wx.App):
-    def __init__(self, redirect=False, filename=None, useBestVisual=False, clearSigInt=True):
-        super().__init__(redirect, filename, useBestVisual, clearSigInt)
-        self.frame2 = gameFrame(None)
-        self.frame2.Show()
-
-
 if __name__ == "__main__":
     app = wx.App(False)
     frame = gameFrame(None)

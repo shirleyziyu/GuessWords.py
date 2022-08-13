@@ -9,8 +9,8 @@ class StartsGame(GameMenu.Menu):
         GameMenu.Menu.__init__(self, parent)
 
     def gameStart(self, event):
-        app2 = HangmanMain.App2()
-        app2.MainLoop()
+        app.frame2.Show(True)
+        app.frame1.Destroy()
 
 
 
@@ -19,7 +19,7 @@ class App(wx.App):
         self.frame1 = StartsGame(None)
         self.frame1.Show(True)
         self.frame2 = HangmanMain.gameFrame(None)
-        self.SetTopWindow(self.frame2)
+        self.SetTopWindow(self.frame1)
         return True
 
 
