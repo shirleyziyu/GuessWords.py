@@ -39,7 +39,7 @@ class GameMain(wx.Frame):
         sbSizer1 = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, u"生命"), wx.VERTICAL)
 
         self.lifes = wx.TextCtrl(sbSizer1.GetStaticBox(), wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize,
-                                 wx.TE_READONLY)
+                                 wx.TE_READONLY | wx.TE_CENTER)
         self.lifes.SetFont(
             wx.Font(wx.NORMAL_FONT.GetPointSize(), wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL,
                     False, wx.EmptyString))
@@ -55,14 +55,14 @@ class GameMain(wx.Frame):
         sbSizer3 = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, u"提示"), wx.VERTICAL)
 
         self.outputHint = wx.TextCtrl(sbSizer3.GetStaticBox(), wx.ID_ANY, wx.EmptyString, wx.DefaultPosition,
-                                      wx.DefaultSize, wx.TE_READONLY)
+                                      wx.DefaultSize, wx.TE_READONLY | wx.TE_CENTER)
         sbSizer3.Add(self.outputHint, 0, wx.ALL | wx.EXPAND, 5)
 
         bSizer2.Add(sbSizer3, 1, wx.EXPAND, 5)
 
         bSizer81 = wx.BoxSizer(wx.VERTICAL)
 
-        self.usersInput = wx.TextCtrl(self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, wx.TE_PROCESS_ENTER)
+        self.usersInput = wx.TextCtrl(self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, wx.TE_PROCESS_ENTER | wx.TE_CENTER)
         bSizer81.Add(self.usersInput, 0, wx.ALL | wx.EXPAND, 5)
 
         self.retry = wx.Button(self, wx.ID_ANY, u"重开", wx.DefaultPosition, wx.DefaultSize, 0)

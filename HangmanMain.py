@@ -65,7 +65,13 @@ class gameFrame(GameWindow.GameMain):
             game_e.Show(True)'''
             self.resultHint = "机会耗尽，游戏失败。"
             self.Destroy()
-            wx.Exit()
+
+
+class App2(wx.App):
+    def __init__(self, redirect=False, filename=None, useBestVisual=False, clearSigInt=True):
+        super().__init__(redirect, filename, useBestVisual, clearSigInt)
+        self.frame2 = gameFrame(None)
+        self.frame2.Show()
 
 
 if __name__ == "__main__":

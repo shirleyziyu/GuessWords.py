@@ -19,9 +19,10 @@ class Result(wx.Dialog):
 
     def __init__(self, parent):
         wx.Dialog.__init__(self, parent, id=wx.ID_ANY, title=u"Gameover", pos=wx.DefaultPosition,
-                           size=wx.Size(315, 148), style=wx.DEFAULT_DIALOG_STYLE)
+                           size=wx.Size(405, 148), style=wx.DEFAULT_DIALOG_STYLE)
 
         self.SetSizeHints(wx.DefaultSize, wx.DefaultSize)
+        self.SetForegroundColour(wx.SystemSettings.GetColour(wx.SYS_COLOUR_BTNTEXT))
 
         bSizer6 = wx.BoxSizer(wx.VERTICAL)
 
@@ -30,10 +31,12 @@ class Result(wx.Dialog):
 
         bSizer6.Add(self.m_staticText6, 0, wx.ALL, 5)
 
-        self.gameResult = wx.TextCtrl(self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, wx.TE_READONLY)
-        bSizer6.Add(self.gameResult, 0, wx.ALL | wx.EXPAND, 5)
+        self.gameResult = wx.TextCtrl(self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0)
+        self.gameResult.SetMinSize(wx.Size(300, -1))
 
-        self.retry = wx.Button(self, wx.ID_ANY, u"再来一次", wx.DefaultPosition, wx.DefaultSize, 0)
+        bSizer6.Add(self.gameResult, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 5)
+
+        self.retry = wx.Button(self, wx.ID_OK, u"再来一次", wx.DefaultPosition, wx.DefaultSize, 0)
         bSizer6.Add(self.retry, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 5)
 
         self.SetSizer(bSizer6)
@@ -41,19 +44,20 @@ class Result(wx.Dialog):
 
         self.Centre(wx.BOTH)
 
-        # Connect Events
-        self.retry.Bind(wx.EVT_BUTTON, self.Again)
-
     def __del__(self):
         pass
 
-    # Virtual event handlers, override them in your derived class
-    def Again(self, event):
-        event.Skip()
+
+class App3(wx.App):
+    def __init__(self, redirect=False, filename=None, useBestVisual=False, clearSigInt=True):
+        super().__init__(redirect, filename, useBestVisual, clearSigInt)
+        self.dialog = Result(None)
+
+    # 这里用ID判断写一个重置事件
 
 
-if __name__ == "__main__":
-    app = wx.App(False)
-    frame = Result(None)
-    frame.Show(True)
-    app.MainLoop()
+app3 = App3()
+
+
+def resultDia():
+    app3.MainLoop()
