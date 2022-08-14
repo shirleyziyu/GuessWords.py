@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 
 import wx
-# import GameEnd
+# import Result
 import GameWindow
 import random
 
@@ -45,11 +45,13 @@ class gameFrame(GameWindow.GameMain):
         '''游戏判断：正确和错误，失败和胜利'''
         if self.chances > 1:
             if self.inputText == self.answer:
-                '''game_e = GameEnd.gameEnd(None)
-                game_e.openFrame("正确答案！游戏胜利！")
-                game_e.gameResult.SetValue("正确答案！游戏胜利！")
-                game_e.Show(True)'''
-                self.resultHint = "正确答案！游戏胜利！"
+                # self.resultHint = "正确答案！游戏胜利！"
+                dlg = wx.MessageDialog(None, u"正确答案，游戏胜利！\n是否再来一次？", 'GameEnd', wx.YES_NO)
+                retry = dlg.ShowModal()
+                if retry == wx.ID_YES:
+                    dlg.Destroy()
+                else:
+                    dlg.Destroy()
                 self.Destroy()
             elif len(self.inputText) == 1:
                 if self.inputText in self.answer:
@@ -59,11 +61,13 @@ class gameFrame(GameWindow.GameMain):
             else:
                 self.chances -= 1
         else:
-            '''game_e = GameEnd.gameEnd(None)
-            game_e.openFrame("机会耗尽，游戏失败。")
-            game_e.gameResult.SetValue("机会耗尽，游戏失败。")
-            game_e.Show(True)'''
-            self.resultHint = "机会耗尽，游戏失败。"
+            # 　self.resultHint = "机会耗尽，游戏失败。"
+            dlg = wx.MessageDialog(None, u"游戏失败，正确答案是%s\n是否再来一次？"%self.answer, 'GameEnd', wx.YES_NO)
+            retry = dlg.ShowModal()
+            if retry == wx.ID_YES:
+                dlg.Destroy()
+            else:
+                dlg.Destroy()
             self.Destroy()
 
 
