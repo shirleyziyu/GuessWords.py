@@ -5,15 +5,18 @@ import wx
 import GameWindow
 import random
 
-fo = open('sentencelib.txt')
-library = fo.readlines()
-randomAnswer = random.choice(library)
-fo.close()
+
+def search():
+    fo = open('sentencelib.txt')
+    library = fo.readlines()
+    return random.choice(library)
+    fo.close()
 
 
 class gameFrame(GameWindow.GameMain):
     def __init__(self, parent):
         GameWindow.GameMain.__init__(self, parent)
+        randomAnswer = search()
         self.inputText = None
         self.sentence = randomAnswer[0:-1]
         self.answer = randomAnswer[0:-1]
@@ -24,6 +27,11 @@ class gameFrame(GameWindow.GameMain):
         self.usersInput.SetFocus()
         self.lifes.SetValue(str(self.chances))
         self.outputHint.SetValue(self.resultHint)
+
+    def Again(self, event):
+        newFrame = gameFrame(None)
+        newFrame.Show()
+        self.Destroy()
 
     def confirmInput(self, event):
         '''回车后发生的事件'''
@@ -45,11 +53,12 @@ class gameFrame(GameWindow.GameMain):
         '''游戏判断：正确和错误，失败和胜利'''
         if self.chances > 1:
             if self.inputText == self.answer:
-                # self.resultHint = "正确答案！游戏胜利！"
                 dlg = wx.MessageDialog(None, u"正确答案，游戏胜利！\n是否再来一次？", 'GameEnd', wx.YES_NO)
                 retry = dlg.ShowModal()
                 if retry == wx.ID_YES:
                     dlg.Destroy()
+                    newFrame = gameFrame(None)
+                    newFrame.Show()
                 else:
                     dlg.Destroy()
                 self.Destroy()
@@ -61,11 +70,12 @@ class gameFrame(GameWindow.GameMain):
             else:
                 self.chances -= 1
         else:
-            # 　self.resultHint = "机会耗尽，游戏失败。"
-            dlg = wx.MessageDialog(None, u"游戏失败，正确答案是%s\n是否再来一次？"%self.answer, 'GameEnd', wx.YES_NO)
+            dlg = wx.MessageDialog(None, u"游戏失败，正确答案是%s\n是否再来一次？" % self.answer, 'GameEnd', wx.YES_NO)
             retry = dlg.ShowModal()
             if retry == wx.ID_YES:
                 dlg.Destroy()
+                newFrame = gameFrame(None)
+                newFrame.Show()
             else:
                 dlg.Destroy()
             self.Destroy()
